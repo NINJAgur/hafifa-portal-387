@@ -20,11 +20,21 @@
         <div class="columns is-multiline">
           <div class="column is-4">
             <div class="box has-text-centered">
+              <span class="icon is-size-2 has-text-info"><i class="fas fa-home"></i></span>
+
+              <h2 class="is-size-4 mt-4 mb-4">למידה משמעותית תחת בקרה</h2>
+
+              <p>הלמידה מפוקחת ומנוהלת על ידי מערך ראשי צוות ומנהלים</p>
+            </div>
+          </div>
+
+          <div class="column is-4">
+            <div class="box has-text-centered">
               <span class="icon is-size-2 has-text-info"><i class="far fa-clock"></i></span>
 
               <h2 class="is-size-4 mt-4 mb-4">למידה בחזית הטכנולוגית</h2>
 
-              <p>This is just some random placeholder text</p>
+              <p>הכשרות המתקדמות ביותר בצה"ל, לתפקידים החשובים ביותר בחטיבת ההגנה בסייבר</p>
             </div>
           </div>
 
@@ -32,24 +42,14 @@
             <div class="box has-text-centered">
               <span class="icon is-size-2 has-text-info"><i class="far fa-comments"></i></span>
 
-              <h2 class="is-size-4 mt-4 mb-4">Study with others</h2>
+              <h2 class="is-size-4 mt-4 mb-4">אינטראקטיביות ונוחות</h2>
 
-              <p>This is just some random placeholder text</p>
-            </div>
-          </div>
-
-          <div class="column is-4">
-            <div class="box has-text-centered">
-              <span class="icon is-size-2 has-text-info"><i class="fas fa-home"></i></span>
-
-              <h2 class="is-size-4 mt-4 mb-4">Study from your home</h2>
-
-              <p>This is just some random placeholder text</p>
+              <p>השתמשו במאגר חומרי העזר והסרטונים כדי למצות את זמן הלימודים שלכם</p>
             </div>
           </div>
 
           <div class="column is-12 has-text-centered">
-            <a href="#" class="button is-info is-size-3 mt-6 mb-6">Click to get started</a>
+            <a href="#" class="button is-info is-size-3 mt-6 mb-6">להתחלה</a>
           </div>
         </div>
       </div>

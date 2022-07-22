@@ -13,7 +13,7 @@
             <div class="navbar-end">
                 <div class="navbar-item">
                     <div class="buttons">
-                        <a href="/sign-up" class="button is-primary"><strong>הירשמות</strong></a>
+                        <a href="/sign-up" class="button is-warning"><strong>הירשמות</strong></a>
                         <a href="/log-in" class="button is-light">התחברות</a>
                     </div>
                 </div>
