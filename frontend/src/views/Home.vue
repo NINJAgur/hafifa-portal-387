@@ -1,16 +1,19 @@
 <template>
   <div class="home">
     <div class="hero is-medium">
-      <div class="has-text-centered" style="display:flex; align-items:center; margin:3rem">
+      <div class="has-text-centered" style="display:flex; align-items:center; margin:2rem; gap: 4rem;">
         <div class="thumbnail" style="
               -webkit-box-flex: 1;
               -ms-flex: 0.5 1 28rem;
                   flex: 0.5 1 28rem;">
-            <img src="../assets/matzov-icon.png" alt="" style="width: 60%;">
+            <img src="../assets/thumbnail.png" alt="" style="width: 80%; border-radius: 49% 51% 55% 45% / 56% 30% 70% 44%;">
         </div>
         <div class="content">
             <h1 class="title">פורטל החפיפה של יחידת מצו"ב-טופז</h1>
             <h2 class="subtitle">!ברוך הבא לשער 0</h2>
+            <div class="column is-12 has-text-centered">
+            <a href="#" class="button is-danger is-size-3 mt-3 mb-6">להתחלת ההכשרה</a>
+          </div>
         </div>
       </div>
     </div>
@@ -24,7 +27,7 @@
 
               <h2 class="is-size-4 mt-4 mb-4">למידה משמעותית תחת בקרה</h2>
 
-              <p>הלמידה מפוקחת ומנוהלת על ידי מערך ראשי צוות ומנהלים</p>
+              <p>הלמידה מפוקחת ומנוהלת על ידי מערך מפקדים, ראשי צוות ומנהלים</p>
             </div>
           </div>
 
@@ -48,9 +51,6 @@
             </div>
           </div>
 
-          <div class="column is-12 has-text-centered">
-            <a href="#" class="button is-info is-size-3 mt-6 mb-6">להתחלה</a>
-          </div>
         </div>
       </div>
     </section>
