@@ -90,7 +90,7 @@ export default {
         document.title = 'שער 0 | הכשרות'
 
         await axios
-            .get('/api/v1/courses/get_categories/')
+            .get('courses/get_categories/')
             .then(response => {
                 console.log(response.data)
 
@@ -107,7 +107,7 @@ export default {
             this.getCourses()
         },
         getCourses() {
-            let url = '/api/v1/courses/'
+            let url = 'courses/'
 
             if (this.activeCategory) {
                 url += '?category_id=' + this.activeCategory.id
