@@ -1,6 +1,6 @@
 <template>
   <div class="signup">
-    <div class="hero is-dark">
+    <div class="hero is-light">
       <div class="hero-body has-text-centered">
         <h1 class="title">הירשמות</h1>
       </div>

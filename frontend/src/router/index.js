@@ -4,9 +4,10 @@ import About from '../views/About.vue'
 import SignUp from '../views/SignUp.vue'
 import LogIn from '../views/LogIn.vue'
 
+import Courses from '../views/Courses.vue'
+import Course from '../views/Course.vue'
 
 import MyAccount from '../views/dashboard/MyAccount.vue'
-import Courses from '../views/Courses.vue'
 
 const routes = [
   {
@@ -34,6 +35,12 @@ const routes = [
     name: 'Courses',
     component: Courses
   },
+  {
+    path: '/courses/:slug',
+    name: 'Course',
+    component: Course
+  },
+
   {
     path: '/dashboard/my-account',
     name: 'MyAccount',

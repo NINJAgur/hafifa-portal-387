@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <div class="hero is-dark">
+    <div class="hero is-light">
       <div class="hero-body has-text-centered">
         <h1 class="title">התחברות</h1>
       </div>
