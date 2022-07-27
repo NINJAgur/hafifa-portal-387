@@ -24,7 +24,7 @@
 
         <div class="field">
             <div class="control">
-                <button class="button is-link">שלח</button>
+                <button class="button is-danger">שלח</button>
             </div>
         </div>
     </form>

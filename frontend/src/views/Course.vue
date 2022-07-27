@@ -24,8 +24,14 @@
                     <div class="column is-10">
                         <template v-if="$store.state.user.isAuthenticated">
                             <template v-if="activeLesson">
-                                <h2>{{ activeLesson.title }}</h2>
+                                <h2>{{ activeLesson.title }}
+                                    <a class="button is-pulled-left is-warning" v-if="activity.status == 'started'" @click="markAsDone">התחל</a>
+                                    <a class="button is-pulled-left is-success" v-else>בוצע</a>
+                                </h2>
                                 
+                                
+                                <hr>
+
                                 {{ activeLesson.long_description }}
 
                                 <hr>
@@ -33,6 +39,12 @@
                                 <template v-if="activeLesson.lesson_type === 'quiz'">
                                     <Quiz
                                         v-bind:quiz="quiz"
+                                    />
+                                </template>
+
+                                <template v-if="activeLesson.lesson_type === 'video'">
+                                    <Video
+                                        v-bind:youtube_id="activeLesson.youtube_id"
                                     />
                                 </template>
 
@@ -74,12 +86,14 @@ import axios from 'axios'
 import CourseComment from '@/components/CourseComment'
 import AddComment from '@/components/AddComment'
 import Quiz from '@/components/Quiz'
+import Video from '@/components/Video'
 
 export default {
     components: {
         CourseComment,
         AddComment,
-        Quiz
+        Quiz,
+        Video
     },
     data() {
         return {
@@ -88,7 +102,8 @@ export default {
             comments: [],
             activeLesson: null,
             errors: [],
-            quiz: {}
+            quiz: {},
+            activity: {}
         }
     },
     async mounted() {
@@ -119,6 +134,26 @@ export default {
             } else {
                 this.getComments()
             }
+
+            this.trackStarted()
+        },
+        trackStarted() {
+            axios
+                .post(`activities/track_started/${this.$route.params.slug}/${this.activeLesson.slug}/`)
+                .then(response => {
+                    console.log(response.data)
+
+                    this.activity = response.data
+                })
+        },
+        markAsDone() {
+            axios
+                .post(`activities/mark_as_done/${this.$route.params.slug}/${this.activeLesson.slug}/`)
+                .then(response => {
+                    console.log(response.data)
+
+                    this.activity = response.data
+                })
         },
         getQuiz() {
             axios
