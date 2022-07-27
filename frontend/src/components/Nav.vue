@@ -16,6 +16,7 @@
                     <div class="buttons">
                         <template v-if="$store.state.user.isAuthenticated">
                             <router-link to="/dashboard/my-account" class="button is-warning">המשתמש שלי</router-link>
+                            <router-link to="/dashboard/create-course" class="button is-light">יצירת הכשרה</router-link>
                         </template>
 
                         <template v-else>
