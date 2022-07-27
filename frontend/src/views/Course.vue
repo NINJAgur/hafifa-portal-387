@@ -30,7 +30,42 @@
 
                                 <hr>
 
-                                <article 
+                                <template v-if="activeLesson.lesson_type === 'quiz'">
+                                    <h3>{{ quiz.question }}</h3>
+
+                                    <div class="control">
+                                        <label class="radio">
+                                            <input type="radio" :value="quiz.op1" v-model="selectedAnswer"> {{ quiz.op1 }}
+                                        </label>
+                                    </div>
+
+                                    <div class="control">
+                                        <label class="radio">
+                                            <input type="radio" :value="quiz.op2" v-model="selectedAnswer"> {{ quiz.op2 }}
+                                        </label>
+                                    </div>
+
+                                    <div class="control">
+                                        <label class="radio">
+                                            <input type="radio" :value="quiz.op3" v-model="selectedAnswer"> {{ quiz.op3 }}
+                                        </label>
+                                    </div>
+
+                                    <div class="control mt-4">
+                                        <button class="button is-info" @click="submitQuiz">סיים</button>
+                                    </div>
+
+                                    <template v-if="quizResult == 'correct'">
+                                        <div class="notification is-success mt-4">תשובה נכונה!</div>
+                                    </template>
+
+                                    <template v-if="quizResult == 'incorrect'">
+                                        <div class="notification is-danger mt-4">תשובה שגויה!</div>
+                                    </template>
+                                </template>
+
+                                <template  v-if="activeLesson.lesson_type === 'article'">
+                                    <article 
                                     class="media box"
                                     v-for="comment in comments"
                                     v-bind:key="comment.id"
@@ -60,12 +95,22 @@
                                         </div>
                                     </div>
 
+                                    <div 
+                                        class="notification is-danger"
+                                        v-for="error in errors"
+                                        v-bind:key="error"
+                                    >
+                                        {{ error }}
+                                    </div>
+
                                     <div class="field">
                                         <div class="control">
                                             <button class="button is-danger">שלח</button>
                                         </div>
                                     </div>
                                 </form>
+                                </template>
+                                
                             </template>
 
                             <template v-else>
@@ -94,19 +139,23 @@ export default {
             course: {},
             lessons: [],
             comments: [],
-            activeLesson: null, 
+            activeLesson: null,
+            errors: [],
+            quiz: {},
+            selectedAnswer: '',
+            quizResult: null,
             comment: {
                 name: '',
                 content: ''
             }
         }
     },
-    mounted() {
+    async mounted() {
         console.log('mounted')
 
         const slug = this.$route.params.slug
 
-        axios
+        await axios
             .get(`/api/v1/courses/${slug}/`)
             .then(response => {
                 console.log(response.data)
@@ -114,27 +163,67 @@ export default {
                 this.course = response.data.course
                 this.lessons = response.data.lessons
             })
+        
+        document.title = this.course.title + ' | שער 0'
     },
     methods: {
+        submitQuiz() {
+            this.quizResult = null
+
+            if (this.selectedAnswer) {
+                if (this.selectedAnswer === this.quiz.answer) {
+                    this.quizResult = 'correct'
+                } else {
+                    this.quizResult = 'incorrect'
+                }
+            } else {
+                alert('Select answer first')
+            }
+        },
         submitComment() {
             console.log('submitComment')
 
-            axios
-                .post(`/api/v1/courses/${this.course.slug}/${this.activeLesson.slug}/`, this.comment)
-                .then(response => {
-                    this.comment.name = ''
-                    this.comment.content = ''
+            this.errors = []
 
-                    alert('The comment was added!')
-                })
-                .catch(error => {
-                    console.log(error)
-                })
+            if (this.comment.name === '') {
+                this.errors.push('The name must be filled out')
+            }
+
+            if (this.comment.content === '') {
+                this.errors.push('The content must be filled out')
+            }
+
+            if (!this.errors.length) {
+                axios
+                    .post(`/api/v1/courses/${this.course.slug}/${this.activeLesson.slug}/`, this.comment)
+                    .then(response => {
+                        this.comment.name = ''
+                        this.comment.content = ''
+
+                        this.comments.push(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            }
         },
         setActiveLesson(lesson) {
             this.activeLesson = lesson
 
-            this.getComments()
+            if (lesson.lesson_type === 'quiz') {
+                this.getQuiz()
+            } else {
+                this.getComments()
+            }
+        },
+        getQuiz() {
+            axios
+                .get(`/api/v1/courses/${this.course.slug}/${this.activeLesson.slug}/get-quiz/`)
+                .then(response => {
+                    console.log(response.data)
+
+                    this.quiz = response.data
+                })
         },
         getComments() {
             axios

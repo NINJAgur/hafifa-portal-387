@@ -11,14 +11,24 @@
                 <div class="columns">
                     <div class="column is-2">
                         <aside class="menu">
-                            <p class="menu-label">קטגוריות</p>
+                            <p class="menu-label">נושאים</p>
 
                             <ul class="menu-list">
-                                <li><a class="button has-text-right	is-warning is-active">כל הקורסים</a></li>
-                                <li><a>בסיסי</a></li>
-                                <li><a>הצפנה</a></li>
-                                <li><a>צד לקוח</a></li>
-                                <li><a>צד שרת</a></li>
+                                <li>
+                                    <a class="button"
+                                        v-bind:class="{'is-danger is-active': !activeCategory}"
+                                        @click="setActiveCategory(null)"
+                                    >
+                                        כל הקורסים
+                                    </a>
+                                </li>
+                                <li
+                                    v-for="category in categories"
+                                    v-bind:key="category.id"
+                                    @click="setActiveCategory(category)"
+                                >
+                                    <a>{{ category.title }}</a>
+                                </li>
                             </ul>
                         </aside>
                     </div>
@@ -30,27 +40,7 @@
                                 v-for="course in courses"
                                 v-bind:key="course.id"
                             >
-                                <div class="card">
-                                    <div class="card-image">
-                                        <figure class="image is-4by3">
-                                            <img src="http://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                                        </figure>
-                                    </div>
-
-                                    <div class="card-content has-text-centered">
-                                        <div class="media">
-                                            <div class="media-content">
-                                                <p class="is-size-5">{{ course.title }}</p>
-                                            </div>
-                                        </div>
-
-                                        <div class="content">
-                                            <p>{{ course.short_description }}</p>
-
-                                            <router-link :to="{name: 'Course', params: {slug: course.slug}}">פרטים</router-link>
-                                        </div>
-                                    </div>
-                                </div>
+                                <CourseItem :course="course" />
                             </div>
 
                             <div class="column is-12">
@@ -81,23 +71,56 @@
 
 <script>
 import axios from 'axios'
+import CourseItem from '@/components/CourseItem.vue'
 
 export default {
     data() {
         return {
-            courses: []
+            courses: [],
+            categories: [],
+            activeCategory: null
         }
     },
-    mounted() {
+    components: {
+        CourseItem
+    },
+   async mounted() {
         console.log('mounted')
 
-        axios
-            .get('/api/v1/courses/')
+        document.title = 'שער 0 | הכשרות'
+
+        await axios
+            .get('/api/v1/courses/get_categories/')
             .then(response => {
                 console.log(response.data)
 
-                this.courses = response.data
+                this.categories = response.data
             })
+        
+        this.getCourses()
+    },
+    methods: {
+        setActiveCategory(category) {
+            console.log(category)
+            this.activeCategory = category
+
+            this.getCourses()
+        },
+        getCourses() {
+            let url = '/api/v1/courses/'
+
+            if (this.activeCategory) {
+                url += '?category_id=' + this.activeCategory.id
+            }
+
+            axios
+                .get(url)
+                .then(response => {
+                    console.log(response.data)
+
+                    this.courses = response.data
+                })
+        }
     }
 }
 </script>

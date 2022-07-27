@@ -62,6 +62,9 @@ export default {
             errors: []
         }
     },
+    mounted() {
+        document.title = 'שער 0 | התחברות'
+    },
     methods: {
         submitForm() {
             console.log('submitForm')

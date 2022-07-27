@@ -72,6 +72,9 @@ export default {
             errors: []
         }
     },
+    mounted() {
+        document.title = 'שער 0 | הירשמות'
+    },
     methods: {
         submitForm() {
             console.log('submitForm')

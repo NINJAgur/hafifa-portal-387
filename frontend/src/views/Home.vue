@@ -12,7 +12,7 @@
             <h1 class="title">פורטל החפיפה של יחידת מצו"ב-טופז</h1>
             <h2 class="subtitle">!ברוך הבא לשער 0</h2>
             <div class="column is-12 has-text-centered">
-            <a href="#" class="button is-danger is-size-3 mt-3 mb-6">להתחלת ההכשרה</a>
+            <a href="/sign-up" class="button is-danger is-size-3 mt-3 mb-6">להתחלת ההכשרה</a>
           </div>
         </div>
       </div>
@@ -51,6 +51,16 @@
             </div>
           </div>
 
+          <hr>
+
+          <div 
+              class="column is-3"
+              v-for="course in courses"
+              v-bind:key="course.id"
+          >
+              <CourseItem :course="course" />
+          </div>
+          
         </div>
       </div>
     </section>
@@ -58,7 +68,32 @@
 </template>
 
 <script>
+import axios from 'axios'
+
+import CourseItem from '@/components/CourseItem.vue'
+
 export default {
-  name: 'Home'
+  name: 'Home',
+  data() {
+      return {
+          courses: []
+      }
+  },
+  components: {
+      CourseItem
+  },
+  mounted() {
+      console.log('mounted')
+
+      document.title = 'שער 0 | דף הבית'
+
+      axios
+          .get('/api/v1/courses/get_frontpage_courses/')
+          .then(response => {
+              console.log(response.data)
+
+              this.courses = response.data
+          })
+  }
 }
 </script>
