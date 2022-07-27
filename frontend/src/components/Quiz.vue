@@ -50,9 +50,9 @@ export default {
 
             if (this.selectedAnswer) {
                 if (this.selectedAnswer === this.quiz.answer) {
-                    this.quizResult = 'תשובה נכונה'
+                    this.quizResult = 'correct'
                 } else {
-                    this.quizResult = 'תשובה שגויה'
+                    this.quizResult = 'incorrect'
                 }
             } else {
                 alert('יש לבחור באחת מן האופציות')
