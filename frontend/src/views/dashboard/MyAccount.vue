@@ -11,13 +11,13 @@
         <div class="column is-12 has-text-centered">
           <h2 class="subtitle is-size-3">הכשרות בביצוע</h2>
         </div>
-        <div class="column is-3">
+        <div class="column is-2">
             <Sidebar />
         </div>
         <div class="column is-9">
           <div class="columns is-multiline">
             <div 
-              class="column is-4"
+              class="column is-3"
               v-for="course in courses"
               v-bind:key="course.id"
             >
@@ -25,13 +25,9 @@
             </div>
           </div>
         </div>
-        
-        
       </div>
 
-      <hr>
-
-      <button @click="logout()" class="button is-danger">התנתקות</button>
+      <!-- <button @click="logout()" class="button is-danger">התנתקות</button> -->
     </section>
   </div>
 </template>
@@ -60,28 +56,8 @@ export default {
 
                 this.courses = response.data
             })
+
+          document.title = 'שער 0 | הפרופיל שלי'
     },
-    methods: {
-        async logout() {
-            console.log('logout')
-
-            await axios
-              .post('token/logout/')
-              .then(response => {
-                console.log('Logged out')
-              })
-              .catch(error => {
-                console.log(error)
-              })
-
-            axios.defaults.headers.common['Authorization'] = ""
-
-            localStorage.removeItem('token')
-
-            this.$store.commit('removeToken')
-
-            this.$router.push('/')
-        }
-    }
 }
 </script>
